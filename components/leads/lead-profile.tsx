@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { X, ChevronDown, ChevronUp, Trash2 } from "lucide-react";
-import type { Lead } from "@/lib/db/schema";
+import { Lead } from "@/db/schema/leads";
 
 interface LeadProfileProps {
   lead: Lead;

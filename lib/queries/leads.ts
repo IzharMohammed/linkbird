@@ -1,5 +1,6 @@
+import { Lead } from "@/db/schema/leads"
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query"
-import type { Lead } from "@/lib/db/schema"
+
 
 // Mock data for development
 const mockLeads: Lead[] = [

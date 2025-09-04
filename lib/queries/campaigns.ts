@@ -1,5 +1,5 @@
+import { Campaign } from "@/db/schema/campaigns"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import type { Campaign } from "@/lib/db/schema"
 
 // Mock data for development - replace with actual API calls
 const mockCampaigns: Campaign[] = [

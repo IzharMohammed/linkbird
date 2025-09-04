@@ -1,5 +1,6 @@
+import { Lead } from "@/db/schema/leads"
 import { create } from "zustand"
-import type { Lead } from "@/lib/db/schema"
+
 
 interface LeadsState {
   selectedLeads: string[]
