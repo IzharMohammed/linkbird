@@ -16,41 +16,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LeadProfile } from "@/components/leads/lead-profile";
 import { Search, ChevronDown, MoreHorizontal } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useInView } from "react-intersection-observer";
+import { ActivityBars } from "@/components/leads/activity-bars";
+import { statusConfig } from "@/constants/status-config";
+import LeadsLoading from "@/components/leads/leads-loading";
 
-const statusConfig = {
-  pending: {
-    label: "Pending Approval",
-    className: "bg-purple-100 text-purple-700",
-  },
-  sent: {
-    label: "Sent 7 mins ago",
-    className: "bg-orange-100 text-orange-700",
-  },
-  accepted: { label: "Accepted", className: "bg-green-100 text-green-700" },
-  replied: { label: "Replied", className: "bg-blue-100 text-blue-700" },
-  do_not_contact: {
-    label: "Do Not Contact",
-    className: "bg-gray-100 text-gray-700",
-  },
-};
-
-const ActivityBars = ({ level }: { level: number }) => {
-  return (
-    <div className="flex items-center gap-1">
-      {[1, 2, 3, 4, 5].map((bar) => (
-        <div
-          key={bar}
-          className={cn(
-            "w-1 h-6 rounded-sm",
-            bar <= level ? "bg-orange-400" : "bg-gray-200"
-          )}
-        />
-      ))}
-    </div>
-  );
-};
 export default function LeadsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -93,14 +63,7 @@ export default function LeadsPage() {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) {
-    return (
-      <div className="p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-64 bg-gray-200 rounded"></div>
-        </div>
-      </div>
-    );
+    return <LeadsLoading />;
   }
 
   if (error) {
