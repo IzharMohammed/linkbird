@@ -1,32 +1,28 @@
 name: CI Checks
-
 on:
   push:
     branches:
       - main
-
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-
     steps:
       # 1. Checkout repo
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # 2. Setup Node with pnpm cache
+      # 2. Install pnpm first
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      # 3. Setup Node with pnpm cache
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20"
           cache: "pnpm"
-          
-
-      # 3. Install pnpm itself
-      - name: Install pnpm
-        run: |
-          npm install -g pnpm
-          echo "$(npm root -g)/pnpm/bin" >> $GITHUB_PATH
 
       # 4. Install dependencies using pnpm
       - name: Install Dependencies
