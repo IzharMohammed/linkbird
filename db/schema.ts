@@ -68,4 +68,8 @@ export const selectUserSchema = createSelectSchema(user);
 
 export type User = z.infer<typeof selectUserSchema>;
 
+export * from "./schema/leads";
+export * from "./schema/campaigns";
+
+
 export const schema = { user, session, account, verification }

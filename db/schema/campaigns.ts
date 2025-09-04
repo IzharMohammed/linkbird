@@ -7,7 +7,7 @@ export const campaigns = pgTable("campaigns", {
     id: uuid("id").primaryKey().defaultRandom(),
     name: text("name").notNull(),
     status: text("status").notNull().default("active"), // active, inactive
-    userId: uuid("user_id")
+    userId: text("user_id")
         .references(() => user.id)
         .notNull(),
     totalLeads: integer("total_leads").default(0),
@@ -23,4 +23,4 @@ export const campaigns = pgTable("campaigns", {
 export const insertCampaignSchema = createInsertSchema(campaigns);
 export const selectCampaignSchema = createSelectSchema(campaigns);
 
-export type Campaign = z.infer<typeof selectCampaignSchema>
+export type Campaign = z.infer<typeof selectCampaignSchema>;

@@ -1,7 +1,7 @@
 import { pgTable, text, uuid, jsonb, timestamp } from "drizzle-orm/pg-core";
 import { user } from "../schema";
 import { campaigns } from "./campaigns";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod"
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import z from "zod";
 
 export const leads = pgTable("leads", {
@@ -15,7 +15,7 @@ export const leads = pgTable("leads", {
     campaignId: uuid("campaign_id")
         .references(() => campaigns.id)
         .notNull(),
-    userId: uuid("user_id")
+    userId: text("user_id")
         .references(() => user.id)
         .notNull(),
     status: text("status").notNull().default("pending"), // pending, sent, accepted, replied, do_not_contact
@@ -30,4 +30,4 @@ export const leads = pgTable("leads", {
 export const insertLeadSchema = createInsertSchema(leads);
 export const selectLeadSchema = createSelectSchema(leads);
 
-export type Lead = z.infer<typeof selectLeadSchema>
+export type Lead = z.infer<typeof selectLeadSchema>;
