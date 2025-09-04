@@ -1,7 +1,8 @@
 "use client";
 
 import type React from "react";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -15,25 +16,49 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { signUpSchema } from "@/schemas/authentication";
+import z from "zod";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { signUp } from "@/server/user";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle registration logic here
-    console.log("Registration attempt:", formData);
+  const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    setIsLoading(true);
+    const { success, message } = await signUp(
+      values.name,
+      values.email,
+      values.password
+    );
+    if (success) {
+      toast.success(message as string);
+      router.push("/auth/login");
+    } else {
+      toast.error(message as string);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -64,7 +89,7 @@ export default function RegisterPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <form onSubmit={handleRegister} className="space-y-4">
+            {/* <form onSubmit={handleRegister} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label
@@ -158,7 +183,82 @@ export default function RegisterPage() {
               >
                 Create my account
               </Button>
-            </form>
+            </form> */}
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            className="bg-white/50 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                            placeholder="Enter email"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            className="bg-white/50 border-gray-200 focus:border-blue-500 focus:ring-blue-500 pr-10"
+                            placeholder="Enter your Password"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            className="bg-white/50 border-gray-200 focus:border-blue-500 focus:ring-blue-500 pr-10"
+                            placeholder="Enter your Password"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "creating..." : "Create my account"}
+                </Button>
+              </form>
+            </Form>
             <div className="text-center text-sm">
               <span className="text-gray-500">Already have an account? </span>
               <Link

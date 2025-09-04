@@ -55,11 +55,13 @@ export default function LoginPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const { message, success } = await signIn(values.email, values.password);
+    console.log([message, success]);
+
     if (success) {
-      toast.success(message as string);
+      toast.success(message);
       router.push("/dashboard");
     } else {
-      toast.error(message as string);
+      toast.error(message);
     }
     setIsLoading(false);
   }
