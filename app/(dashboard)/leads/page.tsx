@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLeads } from "@/lib/queries/leads";
 import { useLeadsStore } from "@/lib/stores/leads-store";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import {
 import { LeadProfile } from "@/components/leads/lead-profile";
 import { Search, ChevronDown, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useInView } from "react-intersection-observer";
 
 const statusConfig = {
   pending: {
@@ -50,7 +51,6 @@ const ActivityBars = ({ level }: { level: number }) => {
     </div>
   );
 };
-
 export default function LeadsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -63,7 +63,14 @@ export default function LeadsPage() {
     setLeadProfileOpen,
   } = useLeadsStore();
 
-  const { data, isLoading, error } = useLeads({
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useLeads({
     search: searchQuery,
     status: statusFilter,
     campaign: campaignFilter,
@@ -75,6 +82,15 @@ export default function LeadsPage() {
     setSelectedLead(lead);
     setLeadProfileOpen(true);
   };
+
+  // Infinite scroll hook
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) {
     return (
@@ -214,7 +230,7 @@ export default function LeadsPage() {
                 const status =
                   statusConfig[lead.status as keyof typeof statusConfig] ||
                   statusConfig.pending;
-                const activityLevel = Math.floor(Math.random() * 5) + 1; // Random activity level for demo
+                const activityLevel = Math.floor(Math.random() * 5) + 1;
 
                 return (
                   <div
@@ -281,6 +297,16 @@ export default function LeadsPage() {
                   </div>
                 );
               })}
+            </div>
+
+            {/* Infinite scroll sentinel */}
+            <div ref={ref} className="h-12 flex items-center justify-center">
+              {isFetchingNextPage && (
+                <p className="text-gray-500">Loading more...</p>
+              )}
+              {!hasNextPage && (
+                <p className="text-gray-400 text-sm">No more leads</p>
+              )}
             </div>
 
             {leads.length === 0 && (
