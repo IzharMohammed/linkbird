@@ -14,5 +14,5 @@ export function getInitials(name?: string, email?: string) {
   if (email) {
     return email.charAt(0).toUpperCase();
   }
-  return "?"; // fallback if nothing available
+  return "I"; // fallback if nothing available
 }

@@ -14,8 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LeadProfile } from "@/components/leads/lead-profile";
-import { Search, ChevronDown, MoreHorizontal } from "lucide-react";
+import { Search, ChevronDown } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { ActivityBars } from "@/components/leads/activity-bars";
 import { statusConfig } from "@/constants/status-config";
