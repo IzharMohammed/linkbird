@@ -1,8 +1,8 @@
 "use client";
 
-import { getLeads } from "@/actions/leads"
+import { getLeads, getLeadsByCampaignId } from "@/actions/leads"
 import { Lead } from "@/db/schema/leads"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 
 export function useLeads(filters?: {
   search?: string
@@ -22,5 +22,13 @@ export function useLeads(filters?: {
       lastPage.hasMore ? pages.length : undefined,
     initialPageParam: 0,
     staleTime: 2 * 60 * 1000, // 2 minutes
+  })
+}
+
+export function useCampaignLeads(id: string, options?: { enabled?: boolean }) {
+  return useQuery({
+    queryKey: ["campaign_leads", id],
+    queryFn: async () => getLeadsByCampaignId(id),
+    enabled: options?.enabled
   })
 }

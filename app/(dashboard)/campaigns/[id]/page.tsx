@@ -16,7 +16,19 @@ import {
   Calendar,
   BarChart3,
   Settings,
+  ChevronDown,
+  MoreHorizontal,
 } from "lucide-react";
+import { useCampaignLeads, useLeads } from "@/lib/queries/leads";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { LeadSheet } from "@/components/leads/lead-sheet";
 
 const MetricCard = ({
   title,
@@ -57,12 +69,40 @@ const MetricCard = ({
   );
 };
 
+const ActivityBars = ({ level }: { level: number }) => {
+  return (
+    <div className="flex items-center gap-1">
+      {[1, 2, 3, 4, 5].map((bar) => (
+        <div
+          key={bar}
+          className={cn(
+            "w-1 h-6 rounded-sm",
+            bar <= level ? "bg-orange-400" : "bg-gray-200"
+          )}
+        />
+      ))}
+    </div>
+  );
+};
+
 export default function CampaignDetailsPage() {
   const params = useParams();
   const campaignId = params.id as string;
   const [activeTab, setActiveTab] = useState("overview");
+  const [selectedLead, setSelectedLead] = useState(null);
+  const [isLeadSheetOpen, setIsLeadSheetOpen] = useState(false);
 
   const { data: campaign, isLoading, error } = useCampaign(campaignId);
+
+  const { data: campaignLeads } = useCampaignLeads(campaignId, {
+    enabled: !!campaign,
+  });
+  console.log(campaignLeads?.length);
+
+  const handleLeadClick = (lead: any) => {
+    setSelectedLead(lead);
+    setIsLeadSheetOpen(true);
+  };
 
   if (isLoading) {
     return (
@@ -243,13 +283,101 @@ export default function CampaignDetailsPage() {
               </p>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-12">
-                <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">
-                  No leads found for this campaign.
-                </p>
-                <Button className="mt-4">Add Leads</Button>
-              </div>
+              {campaignLeads && campaignLeads.length > 0 ? (
+                <div className="space-y-4">
+                  {/* Table Header */}
+                  <div className="grid grid-cols-12 gap-4 pb-4 border-b border-border text-sm font-medium text-muted-foreground">
+                    <div className="col-span-4">
+                      Name <ChevronDown className="inline h-4 w-4 ml-1" />
+                    </div>
+                    <div className="col-span-3">
+                      Campaign Name{" "}
+                      <ChevronDown className="inline h-4 w-4 ml-1" />
+                    </div>
+                    <div className="col-span-2">Activity</div>
+                    <div className="col-span-2">
+                      Status <ChevronDown className="inline h-4 w-4 ml-1" />
+                    </div>
+                    <div className="col-span-1"></div>
+                  </div>
+
+                  {/* Table Body */}
+                  <div className="space-y-1">
+                    {campaignLeads.map((lead) => {
+                      const activityLevel = Math.floor(Math.random() * 5) + 1;
+
+                      return (
+                        <div
+                          key={lead.id}
+                          className="grid grid-cols-12 gap-4 py-4 hover:bg-accent/50 cursor-pointer rounded-lg transition-colors"
+                          onClick={() => handleLeadClick(lead)}
+                        >
+                          <div className="col-span-4 flex items-center gap-3">
+                            <Avatar className="h-10 w-10">
+                              <AvatarImage
+                                src={
+                                  lead.avatar ||
+                                  "/placeholder.svg?height=40&width=40"
+                                }
+                              />
+                              <AvatarFallback>
+                                {lead.name.charAt(0)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-sm font-medium text-foreground truncate">
+                                {lead.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground truncate">
+                                {lead.title}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="col-span-3 flex items-center">
+                            <span className="text-sm text-foreground">
+                              {lead.company}
+                            </span>
+                          </div>
+                          <div className="col-span-2 flex items-center">
+                            <ActivityBars level={activityLevel} />
+                          </div>
+                          <div className="col-span-2 flex items-center">
+                            <Badge
+                              variant="secondary"
+                              className={
+                                lead.status === "pending"
+                                  ? "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300"
+                                  : lead.status === "sent"
+                                  ? "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
+                                  : lead.status === "accepted"
+                                  ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                                  : lead.status === "replied"
+                                  ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
+                                  : "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                              }
+                            >
+                              {lead.status === "pending" && "Pending Approval"}
+                              {lead.status === "sent" && "Sent 7 mins ago"}
+                              {lead.status === "accepted" && "Accepted"}
+                              {lead.status === "replied" && "Replied"}
+                              {lead.status === "do_not_contact" &&
+                                "Do Not Contact"}
+                            </Badge>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">
+                    No leads found for this campaign.
+                  </p>
+                  <Button className="mt-4">Add Leads</Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -308,6 +436,12 @@ export default function CampaignDetailsPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      <LeadSheet
+        lead={selectedLead}
+        open={isLeadSheetOpen}
+        onOpenChange={setIsLeadSheetOpen}
+      />
     </div>
   );
 }
