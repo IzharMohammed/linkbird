@@ -123,7 +123,6 @@ export default function RegisterPage() {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
-                            type={showPassword ? "text" : "password"}
                             className="bg-white/50 border-gray-200 focus:border-blue-500 focus:ring-blue-500 pr-10"
                             placeholder="Enter your Password"
                             {...field}

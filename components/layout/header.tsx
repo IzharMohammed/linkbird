@@ -40,12 +40,12 @@ export function Header({ title, breadcrumbs }: HeaderProps) {
     title || finalBreadcrumbs[finalBreadcrumbs.length - 1]?.label;
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4">
+    <header className=" border-b px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex-1">
           {/* Breadcrumbs */}
           {finalBreadcrumbs.length > 0 && (
-            <nav className="flex items-center space-x-1 text-sm text-gray-500 mb-1">
+            <nav className="flex items-center space-x-1 text-sm  mb-1">
               {finalBreadcrumbs.map((crumb, index) => (
                 <React.Fragment key={crumb.label}>
                   {index > 0 && <ChevronRight className="h-4 w-4" />}
@@ -54,9 +54,7 @@ export function Header({ title, breadcrumbs }: HeaderProps) {
                       {crumb.label}
                     </a>
                   ) : (
-                    <span className="text-gray-900 font-medium">
-                      {crumb.label}
-                    </span>
+                    <span className=" font-medium">{crumb.label}</span>
                   )}
                 </React.Fragment>
               ))}
@@ -64,9 +62,7 @@ export function Header({ title, breadcrumbs }: HeaderProps) {
           )}
           {/* Page Title */}
           {finalTitle && (
-            <h1 className="text-2xl font-semibold text-gray-900">
-              {finalTitle}
-            </h1>
+            <h1 className="text-2xl font-semibold ">{finalTitle}</h1>
           )}
         </div>
 
@@ -85,38 +81,6 @@ export function Header({ title, breadcrumbs }: HeaderProps) {
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
           </Button>
-
-          {/* User Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                  <AvatarFallback>KP</AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end" forceMount>
-              <div className="flex items-center justify-start gap-2 p-2">
-                <div className="flex flex-col space-y-1 leading-none">
-                  <p className="font-medium">Kandid Personal</p>
-                  <p className="w-[200px] truncate text-sm text-muted-foreground">
-                    kandid@personal.com
-                  </p>
-                </div>
-              </div>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">
-                <LogOut className="mr-2 h-4 w-4" />
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
     </header>

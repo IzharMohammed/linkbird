@@ -54,8 +54,6 @@ const StatusBadge = ({ type, count }: { type: string; count: number }) => {
         return "text-blue-600";
       case "connected":
         return "text-blue-600";
-      default:
-        return "text-gray-600";
     }
   };
 
@@ -87,8 +85,8 @@ export default function CampaignsPage() {
     return (
       <div className="p-6">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-64 bg-gray-200 rounded"></div>
+          <div className="h-8  rounded w-1/4"></div>
+          <div className="h-64  rounded"></div>
         </div>
       </div>
     );
@@ -111,7 +109,7 @@ export default function CampaignsPage() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Campaigns</CardTitle>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm  mt-1">
                 Manage your campaigns and track their performance.
               </p>
             </div>
@@ -149,7 +147,7 @@ export default function CampaignsPage() {
 
             <div className="flex-1 max-w-sm">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 " />
                 <Input
                   placeholder="Search campaigns..."
                   value={searchQuery}
@@ -163,7 +161,7 @@ export default function CampaignsPage() {
 
         <CardContent>
           {/* Table Header */}
-          <div className="grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm font-medium text-gray-500">
+          <div className="grid grid-cols-12 gap-4 pb-4 border-b  text-sm font-medium ">
             <div className="col-span-3">Campaign Name</div>
             <div className="col-span-2">Status</div>
             <div className="col-span-2">Total Leads</div>
@@ -176,9 +174,9 @@ export default function CampaignsPage() {
           <div className="space-y-1">
             {filteredCampaigns.map((campaign) => (
               <Link key={campaign.id} href={`/campaigns/${campaign.id}`}>
-                <div className="grid grid-cols-12 gap-4 py-4 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors">
+                <div className="grid grid-cols-12 gap-4 py-4  cursor-pointer rounded-lg transition-colors">
                   <div className="col-span-3 flex items-center">
-                    <span className="text-sm font-medium text-gray-900">
+                    <span className="text-sm font-medium ">
                       {campaign.name}
                     </span>
                   </div>
@@ -244,9 +242,7 @@ export default function CampaignsPage() {
 
           {filteredCampaigns.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500">
-                No campaigns found matching your criteria.
-              </p>
+              <p>No campaigns found matching your criteria.</p>
             </div>
           )}
         </CardContent>

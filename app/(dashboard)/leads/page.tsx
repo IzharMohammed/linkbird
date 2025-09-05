@@ -84,7 +84,7 @@ export default function LeadsPage() {
               <div className="flex items-center gap-4">
                 {/* Search */}
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 " />
                   <Input
                     placeholder="Search leads..."
                     value={searchQuery}
@@ -171,7 +171,7 @@ export default function LeadsPage() {
           </CardHeader>
           <CardContent>
             {/* Table Header */}
-            <div className="grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm font-medium text-gray-500">
+            <div className="grid grid-cols-12 gap-4 pb-4 border-b  text-sm font-medium">
               <div className="col-span-4">
                 Name <ChevronDown className="inline h-4 w-4 ml-1" />
               </div>
@@ -196,7 +196,7 @@ export default function LeadsPage() {
                 return (
                   <div
                     key={lead.id}
-                    className="grid grid-cols-12 gap-4 py-4 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors"
+                    className="grid grid-cols-12 gap-4 py-4  cursor-pointer rounded-lg transition-colors"
                     onClick={() => handleLeadClick(lead)}
                   >
                     <div className="col-span-4 flex items-center gap-3">
@@ -209,18 +209,14 @@ export default function LeadsPage() {
                         <AvatarFallback>{lead.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium text-gray-900 truncate">
+                        <p className="text-sm font-medium  truncate">
                           {lead.name}
                         </p>
-                        <p className="text-xs text-gray-500 truncate">
-                          {lead.title}
-                        </p>
+                        <p className="text-xs  truncate">{lead.title}</p>
                       </div>
                     </div>
                     <div className="col-span-3 flex items-center">
-                      <span className="text-sm text-gray-900">
-                        {lead.company}
-                      </span>
+                      <span className="text-sm ">{lead.company}</span>
                     </div>
                     <div className="col-span-2 flex items-center">
                       <ActivityBars level={activityLevel} />
@@ -234,7 +230,6 @@ export default function LeadsPage() {
                         {lead.status === "do_not_contact" && "Do Not Contact"}
                       </Badge>
                     </div>
-                    
                   </div>
                 );
               })}
@@ -242,19 +237,13 @@ export default function LeadsPage() {
 
             {/* Infinite scroll sentinel */}
             <div ref={ref} className="h-12 flex items-center justify-center">
-              {isFetchingNextPage && (
-                <p className="text-gray-500">Loading more...</p>
-              )}
-              {!hasNextPage && (
-                <p className="text-gray-400 text-sm">No more leads</p>
-              )}
+              {isFetchingNextPage && <p>Loading more...</p>}
+              {!hasNextPage && <p className=" text-sm">No more leads</p>}
             </div>
 
             {leads.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-500">
-                  No leads found matching your criteria.
-                </p>
+                <p>No leads found matching your criteria.</p>
               </div>
             )}
           </CardContent>

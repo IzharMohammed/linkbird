@@ -65,8 +65,10 @@ export const verification = pgTable("verification", {
 
 export const insertUserSchema = createInsertSchema(user);
 export const selectUserSchema = createSelectSchema(user);
+export const selectSessionSchema = createSelectSchema(session);
 
 export type User = z.infer<typeof selectUserSchema>;
+export type Session = z.infer<typeof selectSessionSchema>;
 
 export * from "./schema/leads";
 export * from "./schema/campaigns";

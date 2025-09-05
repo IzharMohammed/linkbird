@@ -143,17 +143,15 @@ export default function DashboardPage() {
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                    <p className="text-sm font-medium truncate">
                       {activity.name}
                     </p>
                     <Badge variant="secondary" className={activity.statusColor}>
                       {activity.status}
                     </Badge>
                   </div>
-                  <p className="text-xs text-gray-500 truncate">
-                    {activity.title}
-                  </p>
-                  <p className="text-xs text-gray-500">{activity.campaign}</p>
+                  <p className="text-xs  truncate">{activity.title}</p>
+                  <p className="text-xs ">{activity.campaign}</p>
                 </div>
               </div>
             ))}
@@ -168,7 +166,7 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="grid grid-cols-4 gap-4 text-sm font-medium text-gray-500 border-b pb-2">
+            <div className="grid grid-cols-4 gap-4 text-sm font-medium  border-b pb-2">
               <div>Account</div>
               <div>Status</div>
               <div>Requests</div>
@@ -215,7 +213,7 @@ export default function DashboardPage() {
                   </Avatar>
                   <div>
                     <p className="text-sm font-medium">{account.name}</p>
-                    <p className="text-xs text-gray-500">{account.email}</p>
+                    <p className="text-xs ">{account.email}</p>
                   </div>
                 </div>
                 <Badge

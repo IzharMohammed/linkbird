@@ -1,5 +1,4 @@
 "use client";
-
 import type React from "react";
 
 import { Sidebar } from "./sidebar";
@@ -13,7 +12,7 @@ interface AppLayoutProps {
 
 export function AppLayout({ children, title, breadcrumbs }: AppLayoutProps) {
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header title={title} breadcrumbs={breadcrumbs} />

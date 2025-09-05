@@ -53,8 +53,8 @@ const MetricCard = ({
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-gray-600">{title}</p>
-            <p className="text-3xl font-bold text-gray-900 mt-2">{value}</p>
+            <p className="text-sm font-medium ">{title}</p>
+            <p className="text-3xl font-bold  mt-2">{value}</p>
           </div>
           <div
             className={`p-3 rounded-lg ${
@@ -108,10 +108,10 @@ export default function CampaignDetailsPage() {
     return (
       <div className="p-6">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-1/4"></div>
+          <div className="h-8 rounded w-1/4"></div>
           <div className="grid grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-32 bg-gray-200 rounded"></div>
+              <div key={i} className="h-32  rounded"></div>
             ))}
           </div>
         </div>
@@ -132,12 +132,8 @@ export default function CampaignDetailsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">
-            Campaign Details
-          </h1>
-          <p className="text-gray-600 mt-1">
-            Manage and track your campaign performance
-          </p>
+          <h1 className="text-2xl font-semibold ">Campaign Details</h1>
+          <p className=" mt-1">Manage and track your campaign performance</p>
         </div>
         <Badge className="bg-green-100 text-green-700">Active</Badge>
       </div>
@@ -201,36 +197,28 @@ export default function CampaignDetailsPage() {
               <CardContent className="space-y-6">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-sm font-medium ">
                       Leads Contacted
                     </span>
-                    <span className="text-sm font-medium text-gray-900">
-                      0.0%
-                    </span>
+                    <span className="text-sm font-medium ">0.0%</span>
                   </div>
                   <Progress value={0} className="h-2" />
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-sm font-medium ">
                       Acceptance Rate
                     </span>
-                    <span className="text-sm font-medium text-gray-900">
-                      0.0%
-                    </span>
+                    <span className="text-sm font-medium ">0.0%</span>
                   </div>
                   <Progress value={0} className="h-2" />
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">
-                      Reply Rate
-                    </span>
-                    <span className="text-sm font-medium text-gray-900">
-                      0.0%
-                    </span>
+                    <span className="text-sm font-medium ">Reply Rate</span>
+                    <span className="text-sm font-medium ">0.0%</span>
                   </div>
                   <Progress value={0} className="h-2" />
                 </div>
@@ -244,27 +232,25 @@ export default function CampaignDetailsPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Calendar className="h-5 w-5 text-gray-400" />
+                  <Calendar className="h-5 w-5 " />
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium ">
                       Start Date: 02/09/2025
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <BarChart3 className="h-5 w-5 text-gray-400" />
+                  <BarChart3 className="h-5 w-5 " />
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      Status: Active
-                    </p>
+                    <p className="text-sm font-medium ">Status: Active</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <MessageSquare className="h-5 w-5 text-gray-400" />
+                  <MessageSquare className="h-5 w-5 " />
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium ">
                       Conversion Rate: 0.0%
                     </p>
                   </div>
@@ -278,7 +264,7 @@ export default function CampaignDetailsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Campaign Leads</CardTitle>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm ">
                 Manage leads associated with this campaign
               </p>
             </CardHeader>
@@ -386,14 +372,12 @@ export default function CampaignDetailsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Message Sequence</CardTitle>
-              <p className="text-sm text-gray-600">
-                Configure your outreach sequence
-              </p>
+              <p className="text-sm ">Configure your outreach sequence</p>
             </CardHeader>
             <CardContent>
               <div className="text-center py-12">
-                <Send className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">No message sequence configured.</p>
+                <Send className="h-12 w-12  mx-auto mb-4" />
+                <p>No message sequence configured.</p>
                 <Button className="mt-4">Create Sequence</Button>
               </div>
             </CardContent>
@@ -404,28 +388,22 @@ export default function CampaignDetailsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Campaign Settings</CardTitle>
-              <p className="text-sm text-gray-600">
-                Configure campaign preferences
-              </p>
+              <p className="text-sm ">Configure campaign preferences</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">
-                    Campaign Name
-                  </label>
+                  <label className="text-sm font-medium ">Campaign Name</label>
                   <input
                     type="text"
                     value={campaign.name}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     readOnly
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">
-                    Status
-                  </label>
-                  <select className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                  <label className="text-sm font-medium ">Status</label>
+                  <select className="mt-1 block w-full px-3 py-2 border  rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                   </select>
