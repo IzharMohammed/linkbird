@@ -234,27 +234,7 @@ export default function LeadsPage() {
                         {lead.status === "do_not_contact" && "Do Not Contact"}
                       </Badge>
                     </div>
-                    <div className="col-span-1 flex items-center justify-end">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem>View Profile</DropdownMenuItem>
-                          <DropdownMenuItem>Send Message</DropdownMenuItem>
-                          <DropdownMenuItem>Add to Campaign</DropdownMenuItem>
-                          <DropdownMenuItem className="text-red-600">
-                            Mark as Do Not Contact
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
+                    
                   </div>
                 );
               })}
