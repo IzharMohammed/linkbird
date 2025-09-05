@@ -211,15 +211,11 @@ export default function LeadsPage() {
                         <p className="text-sm font-medium truncate">
                           {lead.name}
                         </p>
-                        <p className="text-xs text-gray-500 truncate">
-                          {lead.title}
-                        </p>
+                        <p className="text-xs  truncate">{lead.title}</p>
                       </div>
                     </div>
                     <div className="col-span-3 flex items-center">
-                      <span className="text-sm text-gray-600">
-                        {lead.company}
-                      </span>
+                      <span className="text-sm">{lead.company}</span>
                     </div>
                     <div className="col-span-2 flex items-center">
                       <ActivityBars level={activityLevel} />

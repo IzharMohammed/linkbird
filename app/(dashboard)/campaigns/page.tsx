@@ -13,57 +13,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Search,
-  ChevronDown,
-  Plus,
-  Users,
-  Send,
-  CheckCircle,
-  MessageSquare,
-  LinkIcon,
-} from "lucide-react";
-
-const StatusIcon = ({ type, count }: { type: string; count: number }) => {
-  const iconProps = { className: "h-4 w-4" };
-
-  switch (type) {
-    case "total":
-      return <Users {...iconProps} />;
-    case "sent":
-      return <Send {...iconProps} />;
-    case "accepted":
-      return <CheckCircle {...iconProps} />;
-    case "replied":
-      return <MessageSquare {...iconProps} />;
-    case "connected":
-      return <LinkIcon {...iconProps} />;
-    default:
-      return <Users {...iconProps} />;
-  }
-};
-
-const StatusBadge = ({ type, count }: { type: string; count: number }) => {
-  const getColor = (type: string) => {
-    switch (type) {
-      case "sent":
-        return "text-green-600";
-      case "accepted":
-        return "text-green-600";
-      case "replied":
-        return "text-blue-600";
-      case "connected":
-        return "text-blue-600";
-    }
-  };
-
-  return (
-    <div className="flex items-center gap-1">
-      <StatusIcon type={type} count={count} />
-      <span className={`text-sm font-medium ${getColor(type)}`}>{count}</span>
-    </div>
-  );
-};
+import { Search, ChevronDown, Plus } from "lucide-react";
+import { StatusBadge } from "@/components/campaigns/status-badge";
 
 export default function CampaignsPage() {
   const [searchQuery, setSearchQuery] = useState("");

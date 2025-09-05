@@ -17,73 +17,13 @@ import {
   BarChart3,
   Settings,
   ChevronDown,
-  MoreHorizontal,
 } from "lucide-react";
-import { useCampaignLeads, useLeads } from "@/lib/queries/leads";
+import { useCampaignLeads } from "@/lib/queries/leads";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 import { LeadSheet } from "@/components/leads/lead-sheet";
-
-const MetricCard = ({
-  title,
-  value,
-  icon: Icon,
-  color = "blue",
-}: {
-  title: string;
-  value: string | number;
-  icon: any;
-  color?: string;
-}) => {
-  const colorClasses = {
-    blue: "bg-blue-50 text-blue-600",
-    green: "bg-green-50 text-green-600",
-    orange: "bg-orange-50 text-orange-600",
-    purple: "bg-purple-50 text-purple-600",
-  };
-
-  return (
-    <Card>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium ">{title}</p>
-            <p className="text-3xl font-bold  mt-2">{value}</p>
-          </div>
-          <div
-            className={`p-3 rounded-lg ${
-              colorClasses[color as keyof typeof colorClasses]
-            }`}
-          >
-            <Icon className="h-6 w-6" />
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-const ActivityBars = ({ level }: { level: number }) => {
-  return (
-    <div className="flex items-center gap-1">
-      {[1, 2, 3, 4, 5].map((bar) => (
-        <div
-          key={bar}
-          className={cn(
-            "w-1 h-6 rounded-sm",
-            bar <= level ? "bg-orange-400" : "bg-gray-200"
-          )}
-        />
-      ))}
-    </div>
-  );
-};
+import { MetricCard } from "@/components/campaigns/metric-card";
+import { ActivityBars } from "@/components/campaigns/activity-bars";
+import CampaignsLoading from "@/components/campaigns/campaigns-loading";
 
 export default function CampaignDetailsPage() {
   const params = useParams();
@@ -105,18 +45,7 @@ export default function CampaignDetailsPage() {
   };
 
   if (isLoading) {
-    return (
-      <div className="p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 rounded w-1/4"></div>
-          <div className="grid grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-32  rounded"></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
+    return <CampaignsLoading />;
   }
 
   if (error || !campaign) {

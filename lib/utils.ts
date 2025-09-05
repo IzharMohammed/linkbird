@@ -16,3 +16,4 @@ export function getInitials(name?: string, email?: string) {
   }
   return "I"; // fallback if nothing available
 }
+

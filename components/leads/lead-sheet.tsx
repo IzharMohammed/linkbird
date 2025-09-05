@@ -142,15 +142,15 @@ export function LeadSheet({ lead, open, onOpenChange }: LeadSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-96 sm:w-96">
+      <SheetContent side="right" className="w-[1000px] sm:w-[600px] p-6">
         <SheetHeader>
           <SheetTitle>Lead Profile</SheetTitle>
         </SheetHeader>
 
         {/* Lead Info */}
-        <div className="mt-6 space-y-4">
+        <div className="mt-6 space-y-6">
           <div className="flex items-start gap-3">
-            <Avatar className="h-12 w-12">
+            <Avatar className="h-14 w-14">
               <AvatarImage
                 src={lead.avatar || "/placeholder.svg?height=48&width=48"}
               />

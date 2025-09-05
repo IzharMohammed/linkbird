@@ -8,7 +8,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -19,25 +18,17 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
-import { signIn } from "@/server/user";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { ErrorContext } from "@better-fetch/fetch";
-
-const formSchema = z.object({
-  email: z.email(),
-  password: z.string().min(8, {
-    message: "Password must contain at least 8 characters.",
-  }),
-});
+import { signInSchema } from "@/schema/authentication";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -45,8 +36,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -54,7 +45,7 @@ export default function LoginPage() {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof signInSchema>) {
     setIsLoading(true);
     await authClient.signIn.email(
       {
