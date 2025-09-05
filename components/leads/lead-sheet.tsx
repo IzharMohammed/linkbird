@@ -200,25 +200,20 @@ export function LeadSheet({ lead, open, onOpenChange }: LeadSheetProps) {
               </Button>
               {showAdditionalInfo && (
                 <div className="mt-3 space-y-2 text-sm">
-                  <div>
-                    <span className="text-muted-foreground">Email:</span>
-                    <span className="ml-2">
-                      {lead.email || "Not available"}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">LinkedIn:</span>
-                    <span className="ml-2">
-                      {lead.linkedinUrl || "Not available"}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">
-                      Connection Status:
-                    </span>
-                    <span className="ml-2 capitalize">
-                      {lead.connectionStatus?.replace("_", " ")}
-                    </span>
+                  <div className="flex gap-4">
+                    <div>
+                      <Avatar className="h-10 w-10">
+                        <AvatarImage src={lead.avatar || ""} />
+                      </Avatar>
+                    </div>
+                    <div>
+                      <div>
+                        <span>{lead.name}</span>
+                      </div>
+                      <div>
+                        <span>{lead.email}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
