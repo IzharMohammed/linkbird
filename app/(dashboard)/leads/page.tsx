@@ -20,18 +20,15 @@ import { useInView } from "react-intersection-observer";
 import { ActivityBars } from "@/components/leads/activity-bars";
 import { statusConfig } from "@/constants/status-config";
 import LeadsLoading from "@/components/leads/leads-loading";
+import { LeadSheet } from "@/components/leads/lead-sheet";
 
 export default function LeadsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [campaignFilter, setCampaignFilter] = useState("all");
+  const [isLeadSheetOpen, setIsLeadSheetOpen] = useState(false);
 
-  const {
-    selectedLead,
-    setSelectedLead,
-    isLeadProfileOpen,
-    setLeadProfileOpen,
-  } = useLeadsStore();
+  const { selectedLead, setSelectedLead } = useLeadsStore();
 
   const {
     data,
@@ -50,7 +47,7 @@ export default function LeadsPage() {
 
   const handleLeadClick = (lead: any) => {
     setSelectedLead(lead);
-    setLeadProfileOpen(true);
+    setIsLeadSheetOpen(true);
   };
 
   // Infinite scroll hook
@@ -83,6 +80,7 @@ export default function LeadsPage() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Leads</CardTitle>
+
               <div className="flex items-center gap-4">
                 {/* Search */}
                 <div className="relative">
@@ -284,12 +282,17 @@ export default function LeadsPage() {
       </div>
 
       {/* Lead Profile Sidebar */}
-      {isLeadProfileOpen && selectedLead && (
+      {/* {isLeadProfileOpen && selectedLead && (
         <LeadProfile
           lead={selectedLead}
           onClose={() => setLeadProfileOpen(false)}
         />
-      )}
+      )} */}
+      <LeadSheet
+        lead={selectedLead}
+        open={isLeadSheetOpen}
+        onOpenChange={setIsLeadSheetOpen}
+      />
     </div>
   );
 }

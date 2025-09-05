@@ -15,7 +15,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: latest
 
       # 3. Setup Node with pnpm cache
       - name: Setup Node.js

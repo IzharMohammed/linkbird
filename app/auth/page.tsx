@@ -15,8 +15,6 @@ export default function AuthPage() {
   const authClient = createAuthClient();
 
   const signInWithGoogle = async () => {
-    console.log("here...");
-
     await authClient.signIn.social({
       provider: "google",
       callbackURL: "/dashboard",
