@@ -4,10 +4,64 @@ A modern Customer Relationship Management (CRM) system for managing leads, campa
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js 15, TypeScript, Tailwind CSS, shadcn/ui
-- **State**: Zustand, TanStack Query
-- **Database**: PostgreSQL, Drizzle ORM
-- **Auth**: Better Auth with Google OAuth
+- Next.js 15 + TypeScript
+- Better Auth + Google OAuth
+- Drizzle ORM + Database
+- Zustand + TanStack Query
+- Tailwind CSS + shadcn/ui
+
+## Project Structure
+
+```
+LINKBIRD/
+├── app/           # Next.js app router
+├── components/    # UI components
+├── db/           # Database files
+├── lib/          # Utilities
+├── schema/       # zod schema
+└── actions/      # server actions
+```
+
+## Core Features
+
+### 1. Authentication (Better Auth)
+
+- Email/password login & signup
+- Google OAuth
+- Protected routes
+- Session management
+
+### 2. Layout
+
+- Collapsible sidebar (Dashboard, Leads, Campaigns, Settings)
+- Header with breadcrumbs
+- User profile with logout
+
+### 3. Leads Management
+
+- Infinite scroll table (Name, Email, Company, Campaign, Status)
+- Search & filters
+- Side sheet for lead details
+- Status updates & actions
+
+### 4. Campaigns Management
+
+- Campaigns table (Name, Status, Leads Count, Success Rate)
+- Progress bars & statistics
+- CRUD operations
+
+### 5. Database (Drizzle)
+
+```sql
+users
+campaigns
+leads
+```
+
+### 6. State Management
+
+- **Zustand:** UI state, filters, sidebar
+- **TanStack Query:** Data fetching, infinite scroll, caching
 
 ## 🚀 Quick Setup
 
