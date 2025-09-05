@@ -30,6 +30,7 @@ import {
 import { signUp } from "@/server/user";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,17 +48,23 @@ export default function RegisterPage() {
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true);
-    const { success, message } = await signUp(
-      values.name,
-      values.email,
-      values.password
+    await authClient.signUp.email(
+      {
+        email: values.email,
+        name: values.name,
+        password: values.password,
+      },
+      {
+        onSuccess: async () => {
+          toast.success("Signed up successfully");
+          router.push("/auth/login");
+        },
+        onError: (ctx) => {
+          console.log("error", ctx.error.message);
+          toast.error(ctx.error.message);
+        },
+      }
     );
-    if (success) {
-      toast.success(message as string);
-      router.push("/auth/login");
-    } else {
-      toast.error(message as string);
-    }
     setIsLoading(false);
   };
 
@@ -97,14 +104,14 @@ export default function RegisterPage() {
                 <div className="space-y-2">
                   <FormField
                     control={form.control}
-                    name="name"
+                    name={"name" as keyof z.infer<typeof signUpSchema>}
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Name</FormLabel>
                         <FormControl>
                           <Input
-                            className="bg-white/50 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                            placeholder="Enter email"
+                            className="bg-white/50 border-gray-200 focus:border-blue-500 focus:ring-blue-500 pr-10"
+                            placeholder="Enter your name"
                             {...field}
                           />
                         </FormControl>
@@ -117,14 +124,14 @@ export default function RegisterPage() {
                 <div className="space-y-2">
                   <FormField
                     control={form.control}
-                    name="email"
+                    name={"email" as keyof z.infer<typeof signUpSchema>}
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
                             className="bg-white/50 border-gray-200 focus:border-blue-500 focus:ring-blue-500 pr-10"
-                            placeholder="Enter your Password"
+                            placeholder="Enter your email"
                             {...field}
                           />
                         </FormControl>
@@ -137,7 +144,7 @@ export default function RegisterPage() {
                 <div className="space-y-2">
                   <FormField
                     control={form.control}
-                    name="password"
+                    name={"password" as keyof z.infer<typeof signUpSchema>}
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Password</FormLabel>

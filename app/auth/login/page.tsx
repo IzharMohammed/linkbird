@@ -29,6 +29,8 @@ import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { signIn } from "@/server/user";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { ErrorContext } from "@better-fetch/fetch";
 
 const formSchema = z.object({
   email: z.email(),
@@ -54,13 +56,22 @@ export default function LoginPage() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    const { message, success } = await signIn(values.email, values.password);
-    if (success) {
-      toast.success(message);
-      router.push("/dashboard");
-    } else {
-      toast.error(message);
-    }
+    await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onSuccess: async () => {
+          toast.success("Signed in successfully");
+          router.push("/dashboard");
+          router.refresh();
+        },
+        onError: (ctx: ErrorContext) => {
+          toast.error(ctx.error.message);
+        },
+      }
+    );
     setIsLoading(false);
   }
 

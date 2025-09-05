@@ -22,34 +22,34 @@ import LeadsLoading from "@/components/leads/leads-loading";
 import { LeadSheet } from "@/components/leads/lead-sheet";
 
 export default function LeadsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [campaignFilter, setCampaignFilter] = useState("all");
   const [isLeadSheetOpen, setIsLeadSheetOpen] = useState(false);
 
-  const { selectedLead, setSelectedLead } = useLeadsStore();
-
+  // Get data from Zustand store for filtering
   const {
-    data,
-    isLoading,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useLeads({
-    search: searchQuery,
-    status: statusFilter,
-    campaign: campaignFilter,
-  });
+    selectedLead,
+    searchQuery,
+    statusFilter,
+    campaignFilter,
+    setSelectedLead,
+    setSearchQuery,
+    setStatusFilter,
+    setCampaignFilter,
+    getFilteredLeads,
+  } = useLeadsStore();
 
-  const leads = data?.pages.flatMap((page) => page.leads) || [];
+  // Use the infinite query for data loading
+  const { isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useLeads();
+
+  // Get filtered leads from store (this is instant)
+  const leads = getFilteredLeads();
 
   const handleLeadClick = (lead: any) => {
     setSelectedLead(lead);
     setIsLeadSheetOpen(true);
   };
 
-  // Infinite scroll hook
+  // Infinite scroll hook for loading more data from server
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -78,12 +78,12 @@ export default function LeadsPage() {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Leads</CardTitle>
+              <CardTitle>Leads ({leads.length})</CardTitle>
 
               <div className="flex items-center gap-4">
-                {/* Search */}
+                {/* Search - Instant filtering from stored data */}
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 " />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4" />
                   <Input
                     placeholder="Search leads..."
                     value={searchQuery}
@@ -170,7 +170,7 @@ export default function LeadsPage() {
           </CardHeader>
           <CardContent>
             {/* Table Header */}
-            <div className="grid grid-cols-12 gap-4 pb-4 border-b  text-sm font-medium">
+            <div className="grid grid-cols-12 gap-4 pb-4 border-b text-sm font-medium">
               <div className="col-span-4">
                 Name <ChevronDown className="inline h-4 w-4 ml-1" />
               </div>
@@ -208,14 +208,18 @@ export default function LeadsPage() {
                         <AvatarFallback>{lead.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-medium  truncate">
+                        <p className="text-sm font-medium truncate">
                           {lead.name}
                         </p>
-                        <p className="text-xs  truncate">{lead.title}</p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {lead.title}
+                        </p>
                       </div>
                     </div>
                     <div className="col-span-3 flex items-center">
-                      <span className="text-sm ">{lead.company}</span>
+                      <span className="text-sm text-gray-600">
+                        {lead.company}
+                      </span>
                     </div>
                     <div className="col-span-2 flex items-center">
                       <ActivityBars level={activityLevel} />
@@ -234,28 +238,25 @@ export default function LeadsPage() {
               })}
             </div>
 
-            {/* Infinite scroll sentinel */}
+            {/* Infinite scroll sentinel - for loading more data from server */}
             <div ref={ref} className="h-12 flex items-center justify-center">
               {isFetchingNextPage && <p>Loading more...</p>}
-              {!hasNextPage && <p className=" text-sm">No more leads</p>}
+              {!hasNextPage && (
+                <p className="text-gray-500 text-sm">No more leads</p>
+              )}
             </div>
 
             {leads.length === 0 && (
               <div className="text-center py-12">
-                <p>No leads found matching your criteria.</p>
+                <p className="text-gray-500">
+                  No leads found matching your criteria.
+                </p>
               </div>
             )}
           </CardContent>
         </Card>
       </div>
 
-      {/* Lead Profile Sidebar */}
-      {/* {isLeadProfileOpen && selectedLead && (
-        <LeadProfile
-          lead={selectedLead}
-          onClose={() => setLeadProfileOpen(false)}
-        />
-      )} */}
       <LeadSheet
         lead={selectedLead}
         open={isLeadSheetOpen}
