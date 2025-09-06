@@ -48,7 +48,7 @@ LINKBIRD/
 
 - Campaigns table (Name, Status, Leads Count, Success Rate)
 - Progress bars & statistics
-- CRUD operations
+- Sorting, pagination, searching and filtering  
 
 ### 5. Database (Drizzle)
 
