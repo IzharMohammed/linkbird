@@ -5,15 +5,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Search, Bell, Settings, LogOut, ChevronRight } from "lucide-react";
+import { Search, Bell, ChevronRight } from "lucide-react";
 
 interface HeaderProps {
   title?: string;

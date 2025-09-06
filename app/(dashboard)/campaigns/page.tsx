@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Search, ChevronDown, Plus } from "lucide-react";
 import { StatusBadge } from "@/components/campaigns/status-badge";
+import CampaignsLoading from "@/components/campaigns/campaigns-loading";
 
 export default function CampaignsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -33,14 +34,7 @@ export default function CampaignsPage() {
     }) || [];
 
   if (isLoading) {
-    return (
-      <div className="p-6">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8  rounded w-1/4"></div>
-          <div className="h-64  rounded"></div>
-        </div>
-      </div>
-    );
+    return <CampaignsLoading />;
   }
 
   if (error) {

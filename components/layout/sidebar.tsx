@@ -234,18 +234,7 @@ export function Sidebar() {
                 )}
               </AnimatePresence>
             </Button>
-            {/* <Button
-              variant="ghost"
-              size="sm"
-              className="p-2 h-8 w-8"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </Button> */}
+          
           </div>
         </div>
       )}

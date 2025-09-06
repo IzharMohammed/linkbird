@@ -23,7 +23,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LeadSheet } from "@/components/leads/lead-sheet";
 import { MetricCard } from "@/components/campaigns/metric-card";
 import { ActivityBars } from "@/components/campaigns/activity-bars";
-import CampaignsLoading from "@/components/campaigns/campaigns-loading";
+import { CampaignDetailsLoading } from "@/components/campaigns/campaigns-id";
 
 export default function CampaignDetailsPage() {
   const params = useParams();
@@ -45,7 +45,7 @@ export default function CampaignDetailsPage() {
   };
 
   if (isLoading) {
-    return <CampaignsLoading />;
+    return <CampaignDetailsLoading />;
   }
 
   if (error || !campaign) {
