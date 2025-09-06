@@ -16,6 +16,8 @@ import {
 import { Search, ChevronDown, Plus } from "lucide-react";
 import { StatusBadge } from "@/components/campaigns/status-badge";
 import CampaignsLoading from "@/components/campaigns/campaigns-loading";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 export default function CampaignsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -105,86 +107,12 @@ export default function CampaignsPage() {
         </CardHeader>
 
         <CardContent>
-          {/* Table Header */}
-          <div className="grid grid-cols-12 gap-4 pb-4 border-b  text-sm font-medium ">
-            <div className="col-span-3">Campaign Name</div>
-            <div className="col-span-2">Status</div>
-            <div className="col-span-2">Total Leads</div>
-            <div className="col-span-2">Request Status</div>
-            <div className="col-span-2">Connection Status</div>
-            <div className="col-span-1"></div>
-          </div>
-
-          {/* Table Body */}
-          <div className="space-y-1">
-            {filteredCampaigns.map((campaign) => (
-              <Link key={campaign.id} href={`/campaigns/${campaign.id}`}>
-                <div className="grid grid-cols-12 gap-4 py-4  cursor-pointer rounded-lg transition-colors">
-                  <div className="col-span-3 flex items-center">
-                    <span className="text-sm font-medium ">
-                      {campaign.name}
-                    </span>
-                  </div>
-
-                  <div className="col-span-2 flex items-center">
-                    <Badge className="bg-green-100 text-green-700">
-                      {campaign.status === "active" ? "Active" : "Inactive"}
-                    </Badge>
-                  </div>
-
-                  <div className="col-span-2 flex items-center">
-                    <StatusBadge
-                      type="total"
-                      count={campaign.totalLeads || 0}
-                    />
-                  </div>
-
-                  <div className="col-span-2 flex items-center gap-4">
-                    <StatusBadge
-                      type="sent"
-                      count={campaign.requestsSent || 0}
-                    />
-                    <StatusBadge
-                      type="accepted"
-                      count={campaign.requestsAccepted || 0}
-                    />
-                    <StatusBadge
-                      type="replied"
-                      count={campaign.requestsReplied || 0}
-                    />
-                  </div>
-
-                  <div className="col-span-2 flex items-center gap-4">
-                    <StatusBadge type="connected" count={0} />
-                    <StatusBadge type="replied" count={0} />
-                  </div>
-
-                  <div className="col-span-1 flex items-center justify-end">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit Campaign</DropdownMenuItem>
-                        <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
+          <DataTable
+            columns={columns}
+            data={filteredCampaigns}
+            searchPlaceholder="Search Campaigns"
+            searchKey="name"
+          />
           {filteredCampaigns.length === 0 && (
             <div className="text-center py-12">
               <p>No campaigns found matching your criteria.</p>
