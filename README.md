@@ -236,18 +236,6 @@ pnpm  build        # Production build
 npx drizzle-kit push
 pnpm db:seed      # Seed sample data
 ```
-
-### Project Structure
-
-```
-src/
-├── app/             # Next.js app router
-├── components/      # Reusable UI components
-├── lib/            # Utilities and configurations
-├── stores/         # Zustand state management
-└── types/          # TypeScript definitions
-```
-
 ---
 
 **Built with Next.js, TypeScript, and modern web technologies.**

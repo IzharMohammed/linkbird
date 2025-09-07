@@ -8,7 +8,7 @@ async function seedDatabase() {
     try {
         console.log('🌱 Starting database seeding...');
 
-        // Clear existing data (be careful in production!)
+        // Clear existing data 
         console.log('🧹 Clearing existing data...');
         await db.delete(leads);
         await db.delete(campaigns);

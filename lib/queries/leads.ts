@@ -6,26 +6,6 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { useLeadsStore } from "../stores/leads-store";
 import { useEffect } from "react";
 
-// export function useLeads(filters?: {
-//   search?: string
-//   status?: string
-//   campaign?: string
-// }) {
-//   return useInfiniteQuery({
-//     queryKey: ["leads", filters],
-//     queryFn: async ({ pageParam = 0 }): Promise<{ leads: Lead[]; hasMore: boolean }> => {
-//       return getLeads({
-//         ...filters,
-//         page: pageParam,
-//         pageSize: 20,
-//       })
-//     },
-//     getNextPageParam: (lastPage, pages) =>
-//       lastPage.hasMore ? pages.length : undefined,
-//     initialPageParam: 0,
-//     staleTime: 2 * 60 * 1000, // 2 minutes
-//   })
-// }
 export function useLeads() {
   const { setAllLeads, appendLeads, setError } = useLeadsStore();
 
