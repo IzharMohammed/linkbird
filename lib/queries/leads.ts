@@ -6,6 +6,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { useLeadsStore } from "../stores/leads-store";
 import { useEffect, useMemo } from "react";
 
+// client - filtering
 export function useLeads() {
   const { setAllLeads, setError } = useLeadsStore();
 
