@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -16,14 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  LayoutDashboard,
-  Users,
-  Megaphone,
-  MessageSquare,
-  Linkedin,
   Settings,
-  Activity,
-  FileText,
   ChevronLeft,
   ChevronRight,
   LogOut,
@@ -35,35 +28,7 @@ import {
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { motion, AnimatePresence } from "framer-motion";
-
-const navigationItems = [
-  {
-    title: "Overview",
-    items: [
-      { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-      { name: "Leads", href: "/leads", icon: Users },
-      { name: "Campaign", href: "/campaigns", icon: Megaphone },
-      {
-        name: "Messages",
-        href: "/messages",
-        icon: MessageSquare,
-        badge: "10+",
-      },
-      { name: "LinkedIn Accounts", href: "/linkedin-accounts", icon: Linkedin },
-    ],
-  },
-  {
-    title: "Settings",
-    items: [{ name: "Setting & Billing", href: "/settings", icon: Settings }],
-  },
-  {
-    title: "Admin Panel",
-    items: [
-      { name: "Activity logs", href: "/admin/activity", icon: Activity },
-      { name: "User logs", href: "/admin/users", icon: FileText },
-    ],
-  },
-];
+import { navigationItems } from "@/constants/sidebar-items";
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -91,9 +56,11 @@ export function Sidebar() {
       console.error("Error signing out:", error);
     }
   };
+
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
+
   return (
     <div
       className={cn(
@@ -234,7 +201,6 @@ export function Sidebar() {
                 )}
               </AnimatePresence>
             </Button>
-          
           </div>
         </div>
       )}
@@ -244,7 +210,7 @@ export function Sidebar() {
           <Avatar className="h-8 w-8 mx-auto">
             <AvatarImage src="/placeholder.svg?height=32&width=32" />
             <AvatarFallback className="bg-blue-100 text-blue-600">
-              BK
+              {getInitials(name, email)}
             </AvatarFallback>
           </Avatar>
         ) : (
